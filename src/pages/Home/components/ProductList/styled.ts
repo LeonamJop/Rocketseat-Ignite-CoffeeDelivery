@@ -16,5 +16,9 @@ export const ProductListContainer = styled.div`
 export const ListContainer = styled.div`
   width: 70rem;
 
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+
   margin-top: 3.375rem;
 `

@@ -25,12 +25,23 @@ export const ImageContainer = styled.div`
   width: 7.5rem;
   height: 7.5rem;
 
-  margin-top: -2.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: -3.25rem;
 `
 
 export const TagsContainer = styled.div`
-  width: 5rem;
-  height: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+
+  gap: 0.25rem;
+`
+
+export const Tag = styled.span`
   padding: 4px 8px;
 
   margin-top: 0.75rem;
@@ -81,8 +92,17 @@ export const BuyContainer = styled.div`
   span {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: row;
+
+    gap: 0.25rem;
+
+    p {
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 400;
+      font-size: 25px;
+      color: ${(props) => props.theme['base-text']};
+    }
   }
 `
 
@@ -189,4 +209,16 @@ export const AddToCard = styled.button`
 
   background: ${(props) => props.theme['purple-dark']};
   color: ${(props) => props.theme['base-card']};
+  transition: 0.5s;
+
+  &:hover {
+    background-color: ${(props) => props.theme['purple-base']};
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+  }
 `

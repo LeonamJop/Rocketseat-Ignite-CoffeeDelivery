@@ -12,37 +12,62 @@ import {
   InfoItem,
   NameContainer,
   QuantityContainer,
+  Tag,
   TagsContainer,
 } from './styled'
 
-import CoffeeImage from '../../assets/ExpressoTradicional.svg'
+import { useState } from 'react'
 
-export function Card() {
+interface CardProps {
+  image: string
+  tags: string[]
+  name: string
+  description: string
+  price: number
+}
+
+export function Card({ image, tags, name, description, price }: CardProps) {
+  const [quantity, setQuantity] = useState(0)
+
+  function handleDecreaseQuantity() {
+    if (quantity > 0) {
+      setQuantity(quantity - 1)
+    } else {
+      setQuantity(0)
+    }
+  }
+
+  function handleIncreaseAmount() {
+    setQuantity(quantity + 1)
+  }
+
   return (
     <CardContainer>
       <ImageContainer>
-        <img src={CoffeeImage} alt="" />
+        <img src={image} alt="" />
       </ImageContainer>
       <InfoItem>
-        <TagsContainer>TRADICIONAL</TagsContainer>
-        <NameContainer>Expresso Tradicional</NameContainer>
-        <DescriptionContainer>
-          O tradicional café feito com água quente e grãos moídos
-        </DescriptionContainer>
+        <TagsContainer>
+          {tags.map((tag, index) => (
+            <Tag key={index}>{tag}</Tag>
+          ))}
+        </TagsContainer>
+        <NameContainer>{name}</NameContainer>
+        <DescriptionContainer>{description}</DescriptionContainer>
       </InfoItem>
       <BuyContainer>
         <span>
           R$
-          <p>9,90</p>
+          <p>{price}</p>
         </span>
         <ActionsContainer>
           <CountContainer>
-            <ButtonMinus>
-              <Minus size={14} />
+            <ButtonMinus onClick={handleDecreaseQuantity}>
+              <Minus size={16} />
             </ButtonMinus>
-            <QuantityContainer>1</QuantityContainer>
-            <ButtonPlus>
-              <Plus size={14} />
+            <QuantityContainer>{quantity}</QuantityContainer>
+            <ButtonPlus onClick={handleIncreaseAmount}>
+              <Plus size={16} />
             </ButtonPlus>
           </CountContainer>
           <AddToCard>

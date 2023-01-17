@@ -59,4 +59,10 @@ export const Cart = styled.button`
   &:hover {
     cursor: pointer;
   }
+
+  &:focus {
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+  }
 `
