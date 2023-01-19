@@ -9,7 +9,7 @@ export const GlobalStyle = createGlobalStyle`
 
     :focus {
         outline: none;
-        box-shadow: 0 0 0 2px ${(props) => props.theme['purple-base']};
+        /* box-shadow: 0 0 0 2px ${(props) => props.theme['purple-base']}; */
     }
 
     body {
@@ -18,7 +18,24 @@ export const GlobalStyle = createGlobalStyle`
         -webkit-font-smoothing: antialiased;
     }
 
-    input, textarea, button, label, span, p {
+    input {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        font-size: 0.875rem;
+        
+        padding: 0.75rem;
+
+        border: 1px solid ${(props) => props.theme['base-button']};
+        border-radius: 4px;
+
+        background: ${(props) => props.theme['base-input']};
+
+        &:focus {
+            border: 1px solid ${(props) => props.theme['yellow-base']};
+        }
+    }
+
+    textarea, button, label, span, p {
         font-family: 'Roboto', sans-serif;
         font-weight: 400;
         font-size: 0.875rem;

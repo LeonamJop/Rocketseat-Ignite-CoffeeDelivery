@@ -1,3 +1,12 @@
+import { CompleteOrder } from './components/CompleteOrder'
+import { ConfirmOrder } from './components/ConfirmOrder'
+import { CartContainer } from './styles'
+
 export function Cart() {
-  return <h1>Cart</h1>
+  return (
+    <CartContainer>
+      <CompleteOrder />
+      <ConfirmOrder />
+    </CartContainer>
+  )
 }

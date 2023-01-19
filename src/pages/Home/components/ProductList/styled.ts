@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const ProductListContainer = styled.div`
-  /* width: 100%; */
+  width: 100%;
   padding: 1.375rem 10rem 6.75rem;
 
   h1 {
@@ -30,7 +30,7 @@ export const ListContainer = styled.div`
     margin-top: 3.375rem;
   }
 
-  @media (min-width: 110rem) {
+  @media (min-width: 100rem) {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 2rem;
@@ -38,9 +38,17 @@ export const ListContainer = styled.div`
     margin-top: 3.375rem;
   }
 
-  @media (min-width: 125rem) {
+  @media (min-width: 120rem) {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2rem;
+
+    margin-top: 3.375rem;
+  }
+
+  @media (min-width: 120rem) {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     gap: 2rem;
 
     margin-top: 3.375rem;
