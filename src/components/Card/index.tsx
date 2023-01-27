@@ -1,22 +1,18 @@
-import { ShoppingCart, Plus, Minus } from 'phosphor-react'
+import { ShoppingCart } from 'phosphor-react'
 import {
   ActionsContainer,
   AddToCard,
-  ButtonMinus,
-  ButtonPlus,
   BuyContainer,
   CardContainer,
-  CountContainer,
   DescriptionContainer,
   ImageContainer,
   InfoItem,
   NameContainer,
-  QuantityContainer,
   Tag,
   TagsContainer,
 } from './styled'
 
-import { useState } from 'react'
+import { Count } from '../Count'
 
 interface CardProps {
   image: string
@@ -27,20 +23,6 @@ interface CardProps {
 }
 
 export function Card({ image, tags, name, description, price }: CardProps) {
-  const [quantity, setQuantity] = useState(0)
-
-  function handleDecreaseQuantity() {
-    if (quantity > 0) {
-      setQuantity(quantity - 1)
-    } else {
-      setQuantity(0)
-    }
-  }
-
-  function handleIncreaseAmount() {
-    setQuantity(quantity + 1)
-  }
-
   return (
     <CardContainer>
       <ImageContainer>
@@ -61,15 +43,7 @@ export function Card({ image, tags, name, description, price }: CardProps) {
           <p>{price}</p>
         </span>
         <ActionsContainer>
-          <CountContainer>
-            <ButtonMinus onClick={handleDecreaseQuantity}>
-              <Minus size={16} />
-            </ButtonMinus>
-            <QuantityContainer>{quantity}</QuantityContainer>
-            <ButtonPlus onClick={handleIncreaseAmount}>
-              <Plus size={16} />
-            </ButtonPlus>
-          </CountContainer>
+          <Count />
           <AddToCard>
             <ShoppingCart size={22} />
           </AddToCard>

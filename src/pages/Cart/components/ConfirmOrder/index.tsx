@@ -1,7 +1,9 @@
+import { CoffeeSelected } from '../CoffeeSelected'
 import {
   ConfirmOrderButton,
   ConfirmOrderCard,
   ConfirmOrderContainer,
+  Divider,
   Total,
   TotalContainer,
   TotalItems,
@@ -12,6 +14,8 @@ export function ConfirmOrder() {
     <ConfirmOrderContainer>
       <h1>Cafés selecionados</h1>
       <ConfirmOrderCard>
+        <CoffeeSelected />
+        <Divider />
         <TotalContainer>
           <TotalItems>
             <span>Total de itens</span>

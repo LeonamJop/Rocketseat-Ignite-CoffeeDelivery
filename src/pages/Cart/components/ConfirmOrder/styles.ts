@@ -100,3 +100,10 @@ export const ConfirmOrderButton = styled.button`
     background: ${(props) => props.theme['yellow-dark']};
   }
 `
+
+export const Divider = styled.hr`
+  width: 23rem;
+  height: 0;
+
+  border: 1px solid ${(props) => props.theme['base-button']};
+`
