@@ -15,6 +15,8 @@ import cubano from '../../../../assets/CoffeeList/Cubano.svg'
 import havaiano from '../../../../assets/CoffeeList/Havaiano.svg'
 import arabe from '../../../../assets/CoffeeList/Arabe.svg'
 import irlandes from '../../../../assets/CoffeeList/Irlandes.svg'
+import { useContext } from 'react'
+import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 
 const cards = [
   {
@@ -23,7 +25,7 @@ const cards = [
     tags: ['TRADICIONAL'],
     name: 'Expresso Tradicional',
     description: 'O tradicional café feito com água quente e grãos moídos',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 2,
@@ -31,7 +33,7 @@ const cards = [
     tags: ['TRADICIONAL'],
     name: 'Expresso Americano',
     description: 'Expresso diluído, menos intenso que o tradicional',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 3,
@@ -39,7 +41,7 @@ const cards = [
     tags: ['TRADICIONAL'],
     name: 'Expresso Cremoso',
     description: 'Café expresso tradicional com espuma cremosa',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 4,
@@ -47,7 +49,7 @@ const cards = [
     tags: ['TRADICIONAL', 'GELADO'],
     name: 'Expresso Gelado',
     description: 'Bebida preparada com café expresso e cubos de gelo',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 5,
@@ -55,7 +57,7 @@ const cards = [
     tags: ['TRADICIONAL', 'COM LEITE'],
     name: 'Café com Leite',
     description: 'Meio a meio de expresso tradicional com leite vaporizado',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 6,
@@ -64,7 +66,7 @@ const cards = [
     name: 'Latte',
     description:
       'Uma dose de café expresso com o dobro de leite e espuma cremosa',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 7,
@@ -73,7 +75,7 @@ const cards = [
     name: 'Capuccino',
     description:
       'Bebida com canela feita de doses iguais de café, leite e espuma',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 8,
@@ -82,7 +84,7 @@ const cards = [
     name: 'Macchiato',
     description:
       'Café expresso misturado com um pouco de leite quente e espuma',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 9,
@@ -90,7 +92,7 @@ const cards = [
     tags: ['TRADICIONAL', 'COM LEITE'],
     name: 'Mocaccino',
     description: 'Café expresso com calda de chocolate, pouco leite e espuma',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 10,
@@ -98,7 +100,7 @@ const cards = [
     tags: ['ESPECIAL', 'COM LEITE'],
     name: 'Chocolate Quente',
     description: 'Bebida feita com chocolate dissolvido no leite quente e café',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 11,
@@ -107,7 +109,7 @@ const cards = [
     name: 'Cubano',
     description:
       'Drink gelado de café expresso com rum, creme de leite e hortelã',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 12,
@@ -115,7 +117,7 @@ const cards = [
     tags: ['ESPECIAL'],
     name: 'Havaiano',
     description: 'Bebida adocicada preparada com café e leite de coco',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 13,
@@ -123,7 +125,7 @@ const cards = [
     tags: ['ESPECIAL'],
     name: 'Árabe',
     description: 'Bebida preparada com grãos de café árabe e especiarias',
-    price: 9.9,
+    price: '9,90',
   },
   {
     id: 14,
@@ -131,11 +133,13 @@ const cards = [
     tags: ['ESPECIAL', 'ALCOÓLICO'],
     name: 'Irlandês',
     description: 'Bebida a base de café, uísque irlandês, açúcar e chantilly',
-    price: 9.9,
+    price: '9,90',
   },
 ]
 
 export function ProductList() {
+  const { product, setProduct } = useContext(ChoiceProductContext)
+
   return (
     <ProductListContainer>
       <h1>Nossos cafés</h1>
@@ -143,11 +147,14 @@ export function ProductList() {
         {cards.map((card) => (
           <Card
             key={card.id}
+            id={card.id}
             image={card.image}
             tags={card.tags}
             name={card.name}
             description={card.description}
             price={card.price}
+            product={product}
+            setProduct={setProduct}
           />
         ))}
       </ListContainer>

@@ -13,16 +13,46 @@ import {
 } from './styled'
 
 import { Count } from '../Count'
+import { Dispatch, SetStateAction, useState } from 'react'
 
 interface CardProps {
+  id: number
   image: string
   tags: string[]
   name: string
   description: string
-  price: number
+  price: string
+  product: any
+  setProduct: Dispatch<SetStateAction<any>>
 }
 
-export function Card({ image, tags, name, description, price }: CardProps) {
+export function Card({
+  id,
+  image,
+  tags,
+  name,
+  description,
+  price,
+  product,
+  setProduct,
+}: CardProps) {
+  const [quantity, setQuantity] = useState(Number)
+
+  function handleAddToBuyList() {
+    if (quantity === 0) return
+
+    const item = {
+      id,
+      image,
+      name,
+      price,
+      quantity,
+    }
+    setProduct([...product, item])
+  }
+
+  console.log(product)
+
   return (
     <CardContainer>
       <ImageContainer>
@@ -43,8 +73,8 @@ export function Card({ image, tags, name, description, price }: CardProps) {
           <p>{price}</p>
         </span>
         <ActionsContainer>
-          <Count />
-          <AddToCard>
+          <Count quantity={quantity} setQuantity={setQuantity} />
+          <AddToCard onClick={handleAddToBuyList}>
             <ShoppingCart size={22} />
           </AddToCard>
         </ActionsContainer>
