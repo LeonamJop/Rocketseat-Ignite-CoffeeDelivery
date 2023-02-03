@@ -1,5 +1,5 @@
 import { Minus, Plus } from 'phosphor-react'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useReducer } from 'react'
 import {
   ButtonMinus,
   ButtonPlus,
@@ -7,28 +7,36 @@ import {
   QuantityContainer,
 } from './styles'
 
-export function Count() {
-  const [quantity, setQuantity] = useState(0)
+interface CountProps {
+  quantity: number
+  setQuantity?: Dispatch<SetStateAction<number>>
+}
 
-  function handleDecreaseQuantity() {
-    if (quantity > 0) {
-      setQuantity(quantity - 1)
-    } else {
-      setQuantity(0)
+export function Count({ quantity, setQuantity }: CountProps) {
+  function count(state: number, action: string) {
+    switch (action) {
+      case 'decrease':
+        return state > 0 ? (state -= 1) : (state = 0)
+      case 'increase':
+        return (state += 1)
+      default:
+        return state
     }
   }
 
-  function handleIncreaseAmount() {
-    setQuantity(quantity + 1)
-  }
+  const [state, handlerCount] = useReducer(count, 0)
+
+  useEffect(() => {
+    setQuantity?.(state)
+  }, [setQuantity, state])
 
   return (
     <CountContainer>
-      <ButtonMinus onClick={handleDecreaseQuantity}>
+      <ButtonMinus onClick={(e) => handlerCount('decrease')}>
         <Minus size={16} />
       </ButtonMinus>
-      <QuantityContainer>{quantity}</QuantityContainer>
-      <ButtonPlus onClick={handleIncreaseAmount}>
+      <QuantityContainer>{!quantity ? state : quantity}</QuantityContainer>
+      <ButtonPlus onClick={(e) => handlerCount('increase')}>
         <Plus size={16} />
       </ButtonPlus>
     </CountContainer>
