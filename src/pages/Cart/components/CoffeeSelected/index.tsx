@@ -7,27 +7,49 @@ import {
   RemoveButton,
 } from './styles'
 
-import irlandes from '../../../../assets/CoffeeList/Irlandes.svg'
 import { Count } from '../../../../components/Count'
 import { Trash } from 'phosphor-react'
+import { Divider } from '../ConfirmOrder/styles'
 
-export function CoffeeSelected() {
+interface CoffeeSelectedProps {
+  id: number
+  image: string
+  name: string
+  price: string
+  quantity: number
+}
+
+export function CoffeeSelected({
+  id,
+  image,
+  name,
+  price,
+  quantity,
+}: CoffeeSelectedProps) {
+  const convertPrice = parseFloat(price.replace(',', '.'))
+  const totalPriceCoffeeSelected = String(convertPrice * quantity).replace(
+    '.',
+    ',',
+  )
   return (
-    <ItemContainer>
-      <Info>
-        <img src={irlandes} alt="" />
-        <DetailsContainer>
-          <span>irlandes</span>
-          <Actions>
-            <Count />
-            <RemoveButton>
-              <Trash size={16} />
-              <span>remover</span>
-            </RemoveButton>
-          </Actions>
-        </DetailsContainer>
-      </Info>
-      <Price>R$ 9,90</Price>
-    </ItemContainer>
+    <>
+      <ItemContainer>
+        <Info>
+          <img src={image} alt="" />
+          <DetailsContainer>
+            <span>{name}</span>
+            <Actions>
+              <Count quantity={quantity} />
+              <RemoveButton>
+                <Trash size={16} />
+                <span>remover</span>
+              </RemoveButton>
+            </Actions>
+          </DetailsContainer>
+        </Info>
+        <Price>R$ {totalPriceCoffeeSelected}</Price>
+      </ItemContainer>
+      <Divider />
+    </>
   )
 }

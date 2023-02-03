@@ -3,19 +3,31 @@ import {
   ConfirmOrderButton,
   ConfirmOrderCard,
   ConfirmOrderContainer,
-  Divider,
   Total,
   TotalContainer,
   TotalItems,
 } from './styles'
 
 export function ConfirmOrder() {
+  const storedArray = localStorage.getItem('todoList')
+  const product = JSON.parse(storedArray || '[{}]')
+
   return (
     <ConfirmOrderContainer>
       <h1>Cafés selecionados</h1>
       <ConfirmOrderCard>
-        <CoffeeSelected />
-        <Divider />
+        {product
+          ? product.map((product: any) => (
+              <CoffeeSelected
+                key={product.id}
+                id={product.id}
+                image={product.image}
+                name={product.name}
+                price={product.price}
+                quantity={product.quantity}
+              />
+            ))
+          : ''}
         <TotalContainer>
           <TotalItems>
             <span>Total de itens</span>
