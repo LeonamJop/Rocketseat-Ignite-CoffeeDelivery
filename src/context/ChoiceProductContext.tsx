@@ -10,6 +10,7 @@ import {
 interface ChoiceProductType {
   product: any
   setProduct: Dispatch<SetStateAction<any>>
+  handleFormatValue: any
 }
 
 export const ChoiceProductContext = createContext({} as ChoiceProductType)
@@ -28,11 +29,16 @@ export function ChoiceProductContextPorvider({
     localStorage.setItem('todoList', productJSON)
   }, [product])
 
+  function handleFormatValue(item: number) {
+    return String(item.toFixed(2)).replace('.', ',')
+  }
+
   return (
     <ChoiceProductContext.Provider
       value={{
         product,
         setProduct,
+        handleFormatValue,
       }}
     >
       {children}
