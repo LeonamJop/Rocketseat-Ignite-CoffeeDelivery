@@ -13,7 +13,8 @@ import {
 } from './styled'
 
 import { Count } from '../Count'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useContext, useState } from 'react'
+import { ChoiceProductContext } from '../../context/ChoiceProductContext'
 
 interface CardProps {
   id: number
@@ -21,7 +22,7 @@ interface CardProps {
   tags: string[]
   name: string
   description: string
-  price: string
+  price: number
   product: any
   setProduct: Dispatch<SetStateAction<any>>
 }
@@ -37,6 +38,7 @@ export function Card({
   setProduct,
 }: CardProps) {
   const [quantity, setQuantity] = useState(Number)
+  const { handleFormatValue } = useContext(ChoiceProductContext)
 
   function handleAddToBuyList() {
     if (quantity === 0) return
@@ -47,6 +49,7 @@ export function Card({
       name,
       price,
       quantity,
+      totalPriceItem: price * quantity,
     }
     setProduct([...product, item])
   }
@@ -70,7 +73,7 @@ export function Card({
       <BuyContainer>
         <span>
           R$
-          <p>{price}</p>
+          <p>{handleFormatValue(price)}</p>
         </span>
         <ActionsContainer>
           <Count quantity={quantity} setQuantity={setQuantity} />

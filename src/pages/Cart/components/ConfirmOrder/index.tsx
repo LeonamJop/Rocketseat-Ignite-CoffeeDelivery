@@ -1,3 +1,5 @@
+import { useContext, useEffect, useState } from 'react'
+import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 import { CoffeeSelected } from '../CoffeeSelected'
 import {
   ConfirmOrderButton,
@@ -9,8 +11,20 @@ import {
 } from './styles'
 
 export function ConfirmOrder() {
+  const { handleFormatValue } = useContext(ChoiceProductContext)
+  const [totalPriceItems, setTotalPriceItems] = useState(0)
   const storedArray = localStorage.getItem('todoList')
   const product = JSON.parse(storedArray || '[{}]')
+
+  useEffect(() => {
+    let sumTotalPriceItems = 0
+
+    for (let i = 0; i < product.length; i++) {
+      sumTotalPriceItems += product[i].totalPriceItem
+    }
+
+    setTotalPriceItems(sumTotalPriceItems)
+  }, [product])
 
   return (
     <ConfirmOrderContainer>
@@ -25,13 +39,14 @@ export function ConfirmOrder() {
                 name={product.name}
                 price={product.price}
                 quantity={product.quantity}
+                totalPriceItem={product.totalPriceItem}
               />
             ))
           : ''}
         <TotalContainer>
           <TotalItems>
             <span>Total de itens</span>
-            <p>R$ 29,70</p>
+            <p>R$ {handleFormatValue(totalPriceItems) || '0,00'}</p>
           </TotalItems>
           <TotalItems>
             <span>Entrega</span>

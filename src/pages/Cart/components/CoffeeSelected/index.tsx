@@ -10,13 +10,16 @@ import {
 import { Count } from '../../../../components/Count'
 import { Trash } from 'phosphor-react'
 import { Divider } from '../ConfirmOrder/styles'
+import { useContext } from 'react'
+import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 
 interface CoffeeSelectedProps {
   id: number
   image: string
   name: string
-  price: string
+  price: number
   quantity: number
+  totalPriceItem: number
 }
 
 export function CoffeeSelected({
@@ -25,12 +28,9 @@ export function CoffeeSelected({
   name,
   price,
   quantity,
+  totalPriceItem,
 }: CoffeeSelectedProps) {
-  const convertPrice = parseFloat(price.replace(',', '.'))
-  const totalPriceCoffeeSelected = String(convertPrice * quantity).replace(
-    '.',
-    ',',
-  )
+  const { handleFormatValue } = useContext(ChoiceProductContext)
   return (
     <>
       <ItemContainer>
@@ -47,7 +47,7 @@ export function CoffeeSelected({
             </Actions>
           </DetailsContainer>
         </Info>
-        <Price>R$ {totalPriceCoffeeSelected}</Price>
+        <Price>R$ {handleFormatValue(totalPriceItem)}</Price>
       </ItemContainer>
       <Divider />
     </>
