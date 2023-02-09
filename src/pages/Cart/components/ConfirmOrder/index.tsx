@@ -16,6 +16,8 @@ export function ConfirmOrder() {
   const storedArray = localStorage.getItem('todoList')
   const product = JSON.parse(storedArray || '[{}]')
 
+  const freight = 3.5
+
   useEffect(() => {
     let sumTotalPriceItems = 0
 
@@ -50,11 +52,16 @@ export function ConfirmOrder() {
           </TotalItems>
           <TotalItems>
             <span>Entrega</span>
-            <p>R$ 3,50</p>
+            <p>R$ {totalPriceItems ? handleFormatValue(freight) : '0,00'}</p>
           </TotalItems>
           <Total>
             <span>Total</span>
-            <span>R$ 33,20</span>
+            <span>
+              R${' '}
+              {totalPriceItems
+                ? handleFormatValue(totalPriceItems + freight)
+                : '0,00'}
+            </span>
           </Total>
         </TotalContainer>
         <ConfirmOrderButton>confirmar pedido</ConfirmOrderButton>
