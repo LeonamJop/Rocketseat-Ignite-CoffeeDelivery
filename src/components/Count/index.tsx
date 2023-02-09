@@ -35,7 +35,7 @@ export function Count({ quantity, setQuantity }: CountProps) {
       <ButtonMinus onClick={(e) => handlerCount('decrease')}>
         <Minus size={16} />
       </ButtonMinus>
-      <QuantityContainer>{!quantity ? state : quantity}</QuantityContainer>
+      <QuantityContainer>{quantity || state}</QuantityContainer>
       <ButtonPlus onClick={(e) => handlerCount('increase')}>
         <Plus size={16} />
       </ButtonPlus>
