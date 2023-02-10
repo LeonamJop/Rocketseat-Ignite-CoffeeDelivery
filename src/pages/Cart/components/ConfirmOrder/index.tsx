@@ -13,8 +13,8 @@ import {
 export function ConfirmOrder() {
   const { handleFormatValue } = useContext(ChoiceProductContext)
   const [totalPriceItems, setTotalPriceItems] = useState(0)
-  const storedArray = localStorage.getItem('todoList')
-  const product = JSON.parse(storedArray || '[{}]')
+
+  const product = JSON.parse(localStorage.getItem('todoList') || '[{}]')
 
   const freight = 3.5
 

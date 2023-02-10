@@ -40,8 +40,19 @@ export function Card({
   const [quantity, setQuantity] = useState(Number)
   const { handleFormatValue } = useContext(ChoiceProductContext)
 
+  const productList = JSON.parse(localStorage.getItem('todoList') || '[{}]')
+
   function handleAddToBuyList() {
     if (quantity === 0) return
+
+    const updateProduct = productList.find((item: CardProps) => item.id === id)
+
+    if (updateProduct) {
+      updateProduct.quantity = quantity
+      updateProduct.totalPriceItem = price * quantity
+      setProduct(productList)
+      return
+    }
 
     const item = {
       id,
@@ -53,8 +64,6 @@ export function Card({
     }
     setProduct([...product, item])
   }
-
-  console.log(product)
 
   return (
     <CardContainer>
