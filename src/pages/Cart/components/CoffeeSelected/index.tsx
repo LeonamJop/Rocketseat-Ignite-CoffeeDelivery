@@ -26,11 +26,21 @@ export function CoffeeSelected({
   id,
   image,
   name,
-  price,
   quantity,
   totalPriceItem,
 }: CoffeeSelectedProps) {
-  const { handleFormatValue } = useContext(ChoiceProductContext)
+  const { handleFormatValue, setProduct, product } =
+    useContext(ChoiceProductContext)
+
+  function handleDeleteProduct() {
+    const deleteItem = product.filter(
+      (item: CoffeeSelectedProps) => item.id !== id,
+    )
+    if (deleteItem) {
+      setProduct(deleteItem)
+    }
+  }
+
   return (
     <>
       <ItemContainer>
@@ -40,7 +50,7 @@ export function CoffeeSelected({
             <span>{name}</span>
             <Actions>
               <Count quantity={quantity} />
-              <RemoveButton>
+              <RemoveButton onClick={handleDeleteProduct}>
                 <Trash size={16} />
                 <span>remover</span>
               </RemoveButton>

@@ -25,8 +25,9 @@ export function ChoiceProductContextPorvider({
   const [product, setProduct] = useState([])
 
   useEffect(() => {
-    const productJSON = JSON.stringify(product)
-    localStorage.setItem('todoList', productJSON)
+    localStorage.setItem('todoList', JSON.stringify(product))
+
+    setProduct(JSON.parse(localStorage.getItem('todoList') || '[{}]'))
   }, [product])
 
   function handleFormatValue(item: number) {
