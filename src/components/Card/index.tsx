@@ -13,7 +13,7 @@ import {
 } from './styled'
 
 import { Count } from '../Count'
-import { Dispatch, SetStateAction, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { ChoiceProductContext } from '../../context/ChoiceProductContext'
 
 interface CardProps {
@@ -23,34 +23,22 @@ interface CardProps {
   name: string
   description: string
   price: number
-  product: any
-  setProduct: Dispatch<SetStateAction<any>>
 }
 
-export function Card({
-  id,
-  image,
-  tags,
-  name,
-  description,
-  price,
-  product,
-  setProduct,
-}: CardProps) {
+export function Card({ id, image, tags, name, description, price }: CardProps) {
   const [quantity, setQuantity] = useState(Number)
-  const { handleFormatValue } = useContext(ChoiceProductContext)
-
-  const productList = JSON.parse(localStorage.getItem('todoList') || '[{}]')
+  const { handleFormatValue, product, setProduct } =
+    useContext(ChoiceProductContext)
 
   function handleAddToBuyList() {
     if (quantity === 0) return
 
-    const updateProduct = productList.find((item: CardProps) => item.id === id)
+    const updateProduct = product.find((item: CardProps) => item.id === id)
 
     if (updateProduct) {
       updateProduct.quantity = quantity
       updateProduct.totalPriceItem = price * quantity
-      setProduct(productList)
+      setProduct(product)
       return
     }
 

@@ -11,10 +11,8 @@ import {
 } from './styles'
 
 export function ConfirmOrder() {
-  const { handleFormatValue } = useContext(ChoiceProductContext)
+  const { handleFormatValue, product } = useContext(ChoiceProductContext)
   const [totalPriceItems, setTotalPriceItems] = useState(0)
-
-  const product = JSON.parse(localStorage.getItem('todoList') || '[{}]')
 
   const freight = 3.5
 
@@ -33,17 +31,19 @@ export function ConfirmOrder() {
       <h1>Cafés selecionados</h1>
       <ConfirmOrderCard>
         {product
-          ? product.map((product: any) => (
-              <CoffeeSelected
-                key={product.id}
-                id={product.id}
-                image={product.image}
-                name={product.name}
-                price={product.price}
-                quantity={product.quantity}
-                totalPriceItem={product.totalPriceItem}
-              />
-            ))
+          ? product.map((product: any) => {
+              return (
+                <CoffeeSelected
+                  key={product.id}
+                  id={product.id}
+                  image={product.image}
+                  name={product.name}
+                  price={product.price}
+                  quantity={product.quantity}
+                  totalPriceItem={product.totalPriceItem}
+                />
+              )
+            })
           : ''}
         <TotalContainer>
           <TotalItems>
