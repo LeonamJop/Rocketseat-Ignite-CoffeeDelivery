@@ -15,8 +15,8 @@ import cubano from '../../../../assets/CoffeeList/Cubano.svg'
 import havaiano from '../../../../assets/CoffeeList/Havaiano.svg'
 import arabe from '../../../../assets/CoffeeList/Arabe.svg'
 import irlandes from '../../../../assets/CoffeeList/Irlandes.svg'
-import { useContext } from 'react'
-import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
+// import { useContext } from 'react'
+// import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 
 const cards = [
   {
@@ -138,8 +138,6 @@ const cards = [
 ]
 
 export function ProductList() {
-  const { product, setProduct } = useContext(ChoiceProductContext)
-
   return (
     <ProductListContainer>
       <h1>Nossos cafés</h1>
@@ -153,8 +151,6 @@ export function ProductList() {
             name={card.name}
             description={card.description}
             price={card.price}
-            product={product}
-            setProduct={setProduct}
           />
         ))}
       </ListContainer>

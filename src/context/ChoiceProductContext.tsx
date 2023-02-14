@@ -26,8 +26,6 @@ export function ChoiceProductContextPorvider({
 
   useEffect(() => {
     localStorage.setItem('todoList', JSON.stringify(product))
-
-    setProduct(JSON.parse(localStorage.getItem('todoList') || '[{}]'))
   }, [product])
 
   function handleFormatValue(item: number) {
