@@ -5,6 +5,8 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
+import { useEffect, useState } from 'react'
+import { api } from '../../../../services/api'
 import {
   CEP,
   City,
@@ -24,7 +26,29 @@ import {
   Street,
 } from './styles'
 
+type cepProps = {
+  cep: string
+  logradouro: string
+  bairro: string
+  localidade: string
+  uf: string
+}
+
 export function CompleteOrder() {
+  const [inputCep, setInputCep] = useState('')
+  const [cep, setCep] = useState<cepProps>()
+
+  useEffect(() => {
+    if (inputCep && inputCep.length === 8) {
+      const fetchData = async () => {
+        const response = await api.get(`${inputCep}/json`)
+        setCep(response.data)
+      }
+
+      fetchData()
+    }
+  }, [inputCep])
+
   return (
     <ComplementOrderContainer>
       <h1>Complete seu pedido</h1>
@@ -37,16 +61,30 @@ export function CompleteOrder() {
           </div>
         </FormHeader>
         <Form>
-          <CEP placeholder="CEP" />
-          <Street placeholder="Rua" />
+          <CEP
+            placeholder="CEP"
+            defaultValue={cep ? cep.cep : inputCep}
+            onChange={(e) => setInputCep(e.target.value)}
+          />
+          <Street placeholder="Rua" defaultValue={cep ? cep.logradouro : ''} />
           <InfoHouse>
             <HouseNumber placeholder="Número" />
             <ComplementInfo placeholder="Complemento" />
           </InfoHouse>
           <DistrictInfo>
-            <District placeholder="Bairro" />
-            <City placeholder="Cidade" />
-            <FederativeUnit maxLength={2} placeholder="UF" />
+            <District
+              placeholder="Bairro"
+              defaultValue={cep ? cep.bairro : ''}
+            />
+            <City
+              placeholder="Cidade"
+              defaultValue={cep ? cep.localidade : ''}
+            />
+            <FederativeUnit
+              maxLength={2}
+              placeholder="UF"
+              defaultValue={cep ? cep.uf : ''}
+            />
           </DistrictInfo>
         </Form>
       </FormContainer>

@@ -1,5 +1,12 @@
 import { Minus, Plus } from 'phosphor-react'
-import { Dispatch, SetStateAction, useEffect, useReducer } from 'react'
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useReducer,
+} from 'react'
+import { ChoiceProductContext } from '../../context/ChoiceProductContext'
 import {
   ButtonMinus,
   ButtonPlus,
@@ -8,11 +15,14 @@ import {
 } from './styles'
 
 interface CountProps {
+  id?: number
+  price?: number
   quantity: number
-  setQuantity?: Dispatch<SetStateAction<number>>
+  setQuantity: Dispatch<SetStateAction<number>>
 }
 
-export function Count({ quantity, setQuantity }: CountProps) {
+export function Count({ id, price, quantity, setQuantity }: CountProps) {
+  const { product, setProduct } = useContext(ChoiceProductContext)
   function count(state: number, action: string) {
     switch (action) {
       case 'decrease':
@@ -24,18 +34,33 @@ export function Count({ quantity, setQuantity }: CountProps) {
     }
   }
 
-  const [state, handlerCount] = useReducer(count, 0)
+  const [state, handlerCount] = useReducer(count, quantity || 0)
 
   useEffect(() => {
+    if (quantity) {
+      console.log(quantity)
+      if (state < 1) return setQuantity?.(1)
+
+      const updateProduct = product.find((item: CountProps) => item.id === id)
+
+      if (updateProduct) {
+        updateProduct.quantity = state
+        updateProduct.totalPriceItem = price! * state
+        console.log('product: ', product)
+
+        setProduct(product)
+        return
+      }
+    }
     setQuantity?.(state)
-  }, [setQuantity, state])
+  }, [setQuantity, state, id, price, product, setProduct, quantity])
 
   return (
     <CountContainer>
       <ButtonMinus onClick={(e) => handlerCount('decrease')}>
         <Minus size={16} />
       </ButtonMinus>
-      <QuantityContainer>{quantity || state}</QuantityContainer>
+      <QuantityContainer>{state}</QuantityContainer>
       <ButtonPlus onClick={(e) => handlerCount('increase')}>
         <Plus size={16} />
       </ButtonPlus>

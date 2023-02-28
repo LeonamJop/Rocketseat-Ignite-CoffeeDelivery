@@ -10,7 +10,7 @@ import {
 import { Count } from '../../../../components/Count'
 import { Trash } from 'phosphor-react'
 import { Divider } from '../ConfirmOrder/styles'
-import { useContext } from 'react'
+import { Dispatch, SetStateAction, useContext } from 'react'
 import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 
 interface CoffeeSelectedProps {
@@ -19,6 +19,7 @@ interface CoffeeSelectedProps {
   name: string
   price: number
   quantity: number
+  setQuantity: Dispatch<SetStateAction<number>>
   totalPriceItem: number
 }
 
@@ -26,7 +27,9 @@ export function CoffeeSelected({
   id,
   image,
   name,
+  price,
   quantity,
+  setQuantity,
   totalPriceItem,
 }: CoffeeSelectedProps) {
   const { handleFormatValue, setProduct, product } =
@@ -49,7 +52,12 @@ export function CoffeeSelected({
           <DetailsContainer>
             <span>{name}</span>
             <Actions>
-              <Count quantity={quantity} />
+              <Count
+                id={id}
+                price={price}
+                quantity={quantity}
+                setQuantity={setQuantity}
+              />
               <RemoveButton onClick={handleDeleteProduct}>
                 <Trash size={16} />
                 <span>remover</span>

@@ -40,6 +40,7 @@ export function ConfirmOrder() {
                   name={product.name}
                   price={product.price}
                   quantity={product.quantity}
+                  setQuantity={product.setQuantity}
                   totalPriceItem={product.totalPriceItem}
                 />
               )
