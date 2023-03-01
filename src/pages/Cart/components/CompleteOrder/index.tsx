@@ -5,7 +5,8 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 import { api } from '../../../../services/api'
 import {
   CEP,
@@ -26,17 +27,9 @@ import {
   Street,
 } from './styles'
 
-type cepProps = {
-  cep: string
-  logradouro: string
-  bairro: string
-  localidade: string
-  uf: string
-}
-
 export function CompleteOrder() {
   const [inputCep, setInputCep] = useState('')
-  const [cep, setCep] = useState<cepProps>()
+  const { cep, setCep } = useContext(ChoiceProductContext)
 
   useEffect(() => {
     if (inputCep && inputCep.length === 8) {
@@ -47,7 +40,7 @@ export function CompleteOrder() {
 
       fetchData()
     }
-  }, [inputCep])
+  }, [inputCep, setCep])
 
   return (
     <ComplementOrderContainer>
@@ -63,6 +56,7 @@ export function CompleteOrder() {
         <Form>
           <CEP
             placeholder="CEP"
+            maxLength={8}
             defaultValue={cep ? cep.cep : inputCep}
             onChange={(e) => setInputCep(e.target.value)}
           />

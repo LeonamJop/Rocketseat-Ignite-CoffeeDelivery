@@ -26,6 +26,8 @@ export function ConfirmOrder() {
     setTotalPriceItems(sumTotalPriceItems)
   }, [product])
 
+  const isConfirmedDisabled = !product.length
+
   return (
     <ConfirmOrderContainer>
       <h1>Cafés selecionados</h1>
@@ -65,7 +67,9 @@ export function ConfirmOrder() {
             </span>
           </Total>
         </TotalContainer>
-        <ConfirmOrderButton>confirmar pedido</ConfirmOrderButton>
+        <ConfirmOrderButton disabled={isConfirmedDisabled}>
+          confirmar pedido
+        </ConfirmOrderButton>
       </ConfirmOrderCard>
     </ConfirmOrderContainer>
   )

@@ -7,7 +7,7 @@ import { ChoiceProductContext } from '../../context/ChoiceProductContext'
 import { useContext } from 'react'
 
 export function Header() {
-  const { product } = useContext(ChoiceProductContext)
+  const { product, cep } = useContext(ChoiceProductContext)
 
   return (
     <>
@@ -16,10 +16,17 @@ export function Header() {
           <img src={logoCoffeeDelivery} alt="" />
         </NavLink>
         <div>
-          <UserLocation>
-            <MapPin size={22} />
-            <span>São josé, SC</span>
-          </UserLocation>
+          {cep ? (
+            <UserLocation>
+              <MapPin size={22} />
+              <span>
+                {cep.localidade}, {cep.uf}
+              </span>
+            </UserLocation>
+          ) : (
+            ''
+          )}
+
           <NavLink to="/cart" title="Carrinho de compra">
             <Cart>
               <ShoppingCart size={22} />

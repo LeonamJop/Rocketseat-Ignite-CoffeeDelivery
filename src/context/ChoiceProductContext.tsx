@@ -7,10 +7,20 @@ import {
   useState,
 } from 'react'
 
+interface cepProps {
+  cep: string
+  logradouro: string
+  bairro: string
+  localidade: string
+  uf: string
+}
+
 interface ChoiceProductType {
   product: any
   setProduct: Dispatch<SetStateAction<any>>
   handleFormatValue: any
+  cep: any
+  setCep: Dispatch<SetStateAction<any>>
 }
 
 export const ChoiceProductContext = createContext({} as ChoiceProductType)
@@ -23,6 +33,7 @@ export function ChoiceProductContextPorvider({
   children,
 }: ChoiceProductContextPorviderProps) {
   const [product, setProduct] = useState([])
+  const [cep, setCep] = useState<cepProps>()
 
   useEffect(() => {
     localStorage.setItem('todoList', JSON.stringify(product))
@@ -38,6 +49,8 @@ export function ChoiceProductContextPorvider({
         product,
         setProduct,
         handleFormatValue,
+        cep,
+        setCep,
       }}
     >
       {children}
