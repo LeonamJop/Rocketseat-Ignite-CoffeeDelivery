@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 import { CoffeeSelected } from '../CoffeeSelected'
+import * as zod from 'zod'
 import {
   ConfirmOrderButton,
   ConfirmOrderCard,
@@ -9,10 +10,34 @@ import {
   TotalContainer,
   TotalItems,
 } from './styles'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 export function ConfirmOrder() {
-  const { handleFormatValue, product } = useContext(ChoiceProductContext)
+  const { handleFormatValue, product, cep } = useContext(ChoiceProductContext)
   const [totalPriceItems, setTotalPriceItems] = useState(0)
+
+  const [newPrice, setNewPrice] = useState(product)
+
+  useEffect(() => {
+    setNewPrice(product)
+    console.log('newPrice: ', product)
+  }, [product])
+
+  const confirmOrderValidationShema = zod.object({
+    cep: zod.string().min(8, 'Informe um cep valido'),
+  })
+
+  type ConfirmOrderFormData = zod.infer<typeof confirmOrderValidationShema>
+
+  const confirmOrderForm = useForm<ConfirmOrderFormData>({
+    resolver: zodResolver(confirmOrderValidationShema),
+    defaultValues: {
+      cep: cep ? cep.cep : '',
+    },
+  })
+
+  const { handleSubmit, watch, reset } = confirmOrderForm
 
   const freight = 3.5
 
@@ -23,6 +48,8 @@ export function ConfirmOrder() {
       sumTotalPriceItems += product[i].totalPriceItem
     }
 
+    console.log('chegou')
+
     setTotalPriceItems(sumTotalPriceItems)
   }, [product])
 
@@ -32,22 +59,21 @@ export function ConfirmOrder() {
     <ConfirmOrderContainer>
       <h1>Cafés selecionados</h1>
       <ConfirmOrderCard>
-        {product
-          ? product.map((product: any) => {
-              return (
-                <CoffeeSelected
-                  key={product.id}
-                  id={product.id}
-                  image={product.image}
-                  name={product.name}
-                  price={product.price}
-                  quantity={product.quantity}
-                  setQuantity={product.setQuantity}
-                  totalPriceItem={product.totalPriceItem}
-                />
-              )
-            })
-          : ''}
+        {newPrice.length > 0 &&
+          newPrice.map((newPrice: any) => {
+            return (
+              <CoffeeSelected
+                key={newPrice.id}
+                id={newPrice.id}
+                image={newPrice.image}
+                name={newPrice.name}
+                price={newPrice.price}
+                quantity={newPrice.quantity}
+                setQuantity={newPrice.setQuantity}
+                totalPriceItem={newPrice.totalPriceItem}
+              />
+            )
+          })}
         <TotalContainer>
           <TotalItems>
             <span>Total de itens</span>
@@ -67,7 +93,7 @@ export function ConfirmOrder() {
             </span>
           </Total>
         </TotalContainer>
-        <ConfirmOrderButton disabled={isConfirmedDisabled}>
+        <ConfirmOrderButton disabled={isConfirmedDisabled} type="submit">
           confirmar pedido
         </ConfirmOrderButton>
       </ConfirmOrderCard>

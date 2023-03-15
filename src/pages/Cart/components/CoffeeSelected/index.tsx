@@ -10,7 +10,13 @@ import {
 import { Count } from '../../../../components/Count'
 import { Trash } from 'phosphor-react'
 import { Divider } from '../ConfirmOrder/styles'
-import { Dispatch, SetStateAction, useContext } from 'react'
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 
 interface CoffeeSelectedProps {
@@ -34,6 +40,13 @@ export function CoffeeSelected({
 }: CoffeeSelectedProps) {
   const { handleFormatValue, setProduct, product } =
     useContext(ChoiceProductContext)
+
+  // const [newPrice, setNewPrice] = useState(totalPriceItem)
+
+  // useEffect(() => {
+  //   setNewPrice(product[0])
+  //   console.log(product)
+  // }, [product])
 
   function handleDeleteProduct() {
     const deleteItem = product.filter(
@@ -65,7 +78,7 @@ export function CoffeeSelected({
             </Actions>
           </DetailsContainer>
         </Info>
-        <Price>R$ {handleFormatValue(totalPriceItem)}</Price>
+        <Price>R$ {totalPriceItem}</Price>
       </ItemContainer>
       <Divider />
     </>

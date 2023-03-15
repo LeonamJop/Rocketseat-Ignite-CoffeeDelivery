@@ -5,7 +5,7 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 import { api } from '../../../../services/api'
 import {
@@ -28,19 +28,63 @@ import {
 } from './styles'
 
 export function CompleteOrder() {
-  const [inputCep, setInputCep] = useState('')
-  const { cep, setCep } = useContext(ChoiceProductContext)
+  const {
+    cep,
+    setCep,
+    deliveryAddress,
+    setDeliveryAddress,
+    inputCep,
+    setInputCep,
+    street,
+    setStreet,
+    houseNumber,
+    setHouseNumber,
+    complementInfo,
+    setComplementInfo,
+    district,
+    setDistrict,
+    city,
+    setCity,
+    federativeUnit,
+    setFederativeUnit,
+  } = useContext(ChoiceProductContext)
+
+  useEffect(() => {
+    let address = {}
+    if (cep) {
+      address = {
+        cep: cep.cep,
+        street: cep.logradouro || street,
+        houseNumber,
+        complementInfo,
+        district: cep.bairro || district,
+        city: cep.localidade || city,
+        federativeUnit: cep.uf || federativeUnit,
+      }
+      setDeliveryAddress(address)
+    }
+  }, [
+    cep,
+    city,
+    complementInfo,
+    district,
+    federativeUnit,
+    houseNumber,
+    setDeliveryAddress,
+    street,
+  ])
 
   useEffect(() => {
     if (inputCep && inputCep.length === 8) {
       const fetchData = async () => {
         const response = await api.get(`${inputCep}/json`)
         setCep(response.data)
+        setInputCep(response.data.cep)
       }
 
       fetchData()
     }
-  }, [inputCep, setCep])
+  }, [inputCep, setCep, setInputCep])
 
   return (
     <ComplementOrderContainer>
@@ -55,29 +99,49 @@ export function CompleteOrder() {
         </FormHeader>
         <Form>
           <CEP
+            id="cep"
             placeholder="CEP"
             maxLength={8}
             defaultValue={cep ? cep.cep : inputCep}
             onChange={(e) => setInputCep(e.target.value)}
           />
-          <Street placeholder="Rua" defaultValue={cep ? cep.logradouro : ''} />
+          <Street
+            placeholder="Rua"
+            defaultValue={cep ? cep.logradouro : ''}
+            onChange={(e) => setStreet(e.target.defaultValue)}
+          />
           <InfoHouse>
-            <HouseNumber placeholder="Número" />
-            <ComplementInfo placeholder="Complemento" />
+            <HouseNumber
+              placeholder="Número"
+              defaultValue={deliveryAddress.houseNumber || ''}
+              onChange={(e) => setHouseNumber(e.target.value)}
+            />
+            <ComplementInfo
+              placeholder="Complemento"
+              defaultValue={deliveryAddress.complementInfo || ''}
+              onChange={(e) => setComplementInfo(e.target.value)}
+            />
           </InfoHouse>
           <DistrictInfo>
             <District
               placeholder="Bairro"
               defaultValue={cep ? cep.bairro : ''}
+              onChange={(e) => setDistrict(e.target.defaultValue)}
             />
             <City
               placeholder="Cidade"
               defaultValue={cep ? cep.localidade : ''}
+              onChange={(e) =>
+                e.target.value
+                  ? setCity(e.target.value)
+                  : setCity(e.target.defaultValue)
+              }
             />
             <FederativeUnit
               maxLength={2}
               placeholder="UF"
               defaultValue={cep ? cep.uf : ''}
+              onChange={(e) => setFederativeUnit(e.target.defaultValue)}
             />
           </DistrictInfo>
         </Form>

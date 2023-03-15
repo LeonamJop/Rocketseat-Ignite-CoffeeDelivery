@@ -23,6 +23,7 @@ interface CountProps {
 
 export function Count({ id, price, quantity, setQuantity }: CountProps) {
   const { product, setProduct } = useContext(ChoiceProductContext)
+
   function count(state: number, action: string) {
     switch (action) {
       case 'decrease':
@@ -38,7 +39,7 @@ export function Count({ id, price, quantity, setQuantity }: CountProps) {
 
   useEffect(() => {
     if (quantity) {
-      console.log(quantity)
+      console.log('quantity: ', quantity)
       if (state < 1) return setQuantity?.(1)
 
       const updateProduct = product.find((item: CountProps) => item.id === id)
@@ -47,6 +48,10 @@ export function Count({ id, price, quantity, setQuantity }: CountProps) {
         updateProduct.quantity = state
         updateProduct.totalPriceItem = price! * state
         console.log('product: ', product)
+
+        product[product.findIndex((el) => el.id === id)] = updateProduct
+
+        console.log('Aqui', product)
 
         setProduct(product)
         return
