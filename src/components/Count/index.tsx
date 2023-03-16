@@ -49,16 +49,18 @@ export function Count({ id, price, quantity, setQuantity }: CountProps) {
         updateProduct.totalPriceItem = price! * state
         console.log('product: ', product)
 
-        product[product.findIndex((el) => el.id === id)] = updateProduct
+        const result = product.map((item: CountProps) =>
+          item.id === id ? updateProduct : item,
+        )
 
         console.log('Aqui', product)
 
-        setProduct(product)
+        setProduct(result)
         return
       }
     }
     setQuantity?.(state)
-  }, [setQuantity, state, id, price, product, setProduct, quantity])
+  }, [id, price, quantity, setQuantity, state])
 
   return (
     <CountContainer>
