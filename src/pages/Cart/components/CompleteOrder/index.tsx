@@ -54,11 +54,11 @@ export function CompleteOrder() {
     if (cep) {
       address = {
         cep: cep.cep,
-        street: cep.logradouro || street,
+        street: cep.logradouro,
         houseNumber,
         complementInfo,
-        district: cep.bairro || district,
-        city: cep.localidade || city,
+        district: cep.bairro,
+        city: cep.localidade,
         federativeUnit: cep.uf || federativeUnit,
       }
       setDeliveryAddress(address)
@@ -86,6 +86,8 @@ export function CompleteOrder() {
     }
   }, [inputCep, setCep, setInputCep])
 
+  const isCepEmpty = !cep
+
   return (
     <ComplementOrderContainer>
       <h1>Complete seu pedido</h1>
@@ -106,42 +108,44 @@ export function CompleteOrder() {
             onChange={(e) => setInputCep(e.target.value)}
           />
           <Street
+            disabled={isCepEmpty}
             placeholder="Rua"
-            defaultValue={cep ? cep.logradouro : ''}
-            onChange={(e) => setStreet(e.target.defaultValue)}
+            value={cep ? cep.logradouro : ''}
+            onChange={(e) => setStreet(e.target.value)}
           />
           <InfoHouse>
             <HouseNumber
+              disabled={isCepEmpty}
               placeholder="Número"
-              defaultValue={deliveryAddress.houseNumber || ''}
+              value={deliveryAddress.houseNumber || ''}
               onChange={(e) => setHouseNumber(e.target.value)}
             />
             <ComplementInfo
+              disabled={isCepEmpty}
               placeholder="Complemento"
-              defaultValue={deliveryAddress.complementInfo || ''}
+              value={deliveryAddress.complementInfo || ''}
               onChange={(e) => setComplementInfo(e.target.value)}
             />
           </InfoHouse>
           <DistrictInfo>
             <District
+              disabled={isCepEmpty}
               placeholder="Bairro"
-              defaultValue={cep ? cep.bairro : ''}
-              onChange={(e) => setDistrict(e.target.defaultValue)}
+              value={cep ? cep.bairro : ''}
+              onChange={(e) => setDistrict(e.target.value)}
             />
             <City
+              disabled={isCepEmpty}
               placeholder="Cidade"
-              defaultValue={cep ? cep.localidade : ''}
-              onChange={(e) =>
-                e.target.value
-                  ? setCity(e.target.value)
-                  : setCity(e.target.defaultValue)
-              }
+              value={cep ? cep.localidade : ''}
+              onChange={(e) => setCity(e.target.value)}
             />
             <FederativeUnit
+              disabled={isCepEmpty}
               maxLength={2}
               placeholder="UF"
-              defaultValue={cep ? cep.uf : ''}
-              onChange={(e) => setFederativeUnit(e.target.defaultValue)}
+              value={cep ? cep.uf : ''}
+              onChange={(e) => setFederativeUnit(e.target.value)}
             />
           </DistrictInfo>
         </Form>

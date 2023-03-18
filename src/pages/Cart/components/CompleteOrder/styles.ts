@@ -66,12 +66,19 @@ export const Form = styled.form`
   justify-content: flex-start;
 `
 
-export const CEP = styled.input`
+const BaseInput = styled.input`
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+`
+
+export const CEP = styled(BaseInput)`
   width: 12.5rem;
   height: 2.625rem;
 `
 
-export const Street = styled.input`
+export const Street = styled(BaseInput)`
   width: 100%;
   height: 2.625rem;
 `
@@ -86,10 +93,10 @@ export const InfoHouse = styled.div`
   gap: 0.75rem;
 `
 
-export const HouseNumber = styled.input`
+export const HouseNumber = styled(BaseInput)`
   width: 12.5rem;
 `
-export const ComplementInfo = styled.input`
+export const ComplementInfo = styled(BaseInput)`
   width: 21.75rem;
 `
 
@@ -103,15 +110,15 @@ export const DistrictInfo = styled.div`
   gap: 0.75rem;
 `
 
-export const District = styled.input`
+export const District = styled(BaseInput)`
   width: 12.5rem;
 `
 
-export const City = styled.input`
+export const City = styled(BaseInput)`
   width: 17.25rem;
 `
 
-export const FederativeUnit = styled.input`
+export const FederativeUnit = styled(BaseInput)`
   width: 3.75rem;
   text-transform: uppercase;
 `
