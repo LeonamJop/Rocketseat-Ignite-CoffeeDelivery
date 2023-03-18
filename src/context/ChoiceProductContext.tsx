@@ -38,7 +38,6 @@ interface ChoiceProductType {
   federativeUnit: string
   setFederativeUnit: Dispatch<SetStateAction<string>>
   existsEmptyFields: boolean
-  handleChecksEmptyFields: () => void
 }
 
 export const ChoiceProductContext = createContext({} as ChoiceProductType)
@@ -65,8 +64,6 @@ export function ChoiceProductContextPorvider({
 
   useEffect(() => {
     localStorage.setItem('todoList', JSON.stringify(product))
-    const productList = localStorage.getItem('todoList')
-    console.log('productList:', productList)
     localStorage.setItem('deliveryAddress', JSON.stringify(deliveryAddress))
   }, [deliveryAddress, product])
 
@@ -74,16 +71,16 @@ export function ChoiceProductContextPorvider({
     return String(item.toFixed(2)).replace('.', ',')
   }
 
-  function handleChecksEmptyFields() {
+  useEffect(() => {
     if (deliveryAddress) {
-      Object.keys(deliveryAddress).forEach(function (item) {
-        if (item === '') {
+      for (const indice in deliveryAddress) {
+        if (deliveryAddress[indice as keyof typeof deliveryAddress] === '') {
           return setExistsEmptyFields(true)
         }
-      })
+      }
     }
     return setExistsEmptyFields(false)
-  }
+  }, [deliveryAddress])
 
   return (
     <ChoiceProductContext.Provider
@@ -110,7 +107,6 @@ export function ChoiceProductContextPorvider({
         federativeUnit,
         setFederativeUnit,
         existsEmptyFields,
-        handleChecksEmptyFields,
       }}
     >
       {children}
