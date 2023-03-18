@@ -39,7 +39,6 @@ export function Count({ id, price, quantity, setQuantity }: CountProps) {
 
   useEffect(() => {
     if (quantity) {
-      console.log('quantity: ', quantity)
       if (state < 1) return setQuantity?.(1)
 
       const updateProduct = product.find((item: CountProps) => item.id === id)
@@ -47,13 +46,10 @@ export function Count({ id, price, quantity, setQuantity }: CountProps) {
       if (updateProduct) {
         updateProduct.quantity = state
         updateProduct.totalPriceItem = price! * state
-        console.log('product: ', product)
 
         const result = product.map((item: CountProps) =>
           item.id === id ? updateProduct : item,
         )
-
-        console.log('Aqui', product)
 
         setProduct(result)
         return
