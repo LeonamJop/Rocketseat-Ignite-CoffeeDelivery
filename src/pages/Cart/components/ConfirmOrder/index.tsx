@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 import { CoffeeSelected } from '../CoffeeSelected'
-import * as zod from 'zod'
 import {
   ConfirmOrderButton,
   ConfirmOrderCard,
@@ -10,34 +9,17 @@ import {
   TotalContainer,
   TotalItems,
 } from './styles'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 
 export function ConfirmOrder() {
-  const { handleFormatValue, product, cep } = useContext(ChoiceProductContext)
+  const { handleFormatValue, product, existsEmptyFields, cep } =
+    useContext(ChoiceProductContext)
   const [totalPriceItems, setTotalPriceItems] = useState(0)
 
   const [newPrice, setNewPrice] = useState(product)
 
   useEffect(() => {
     setNewPrice(product)
-    console.log('newPrice: ', product)
   }, [product])
-
-  const confirmOrderValidationShema = zod.object({
-    cep: zod.string().min(8, 'Informe um cep valido'),
-  })
-
-  type ConfirmOrderFormData = zod.infer<typeof confirmOrderValidationShema>
-
-  const confirmOrderForm = useForm<ConfirmOrderFormData>({
-    resolver: zodResolver(confirmOrderValidationShema),
-    defaultValues: {
-      cep: cep ? cep.cep : '',
-    },
-  })
-
-  const { handleSubmit, watch, reset } = confirmOrderForm
 
   const freight = 3.5
 
@@ -48,12 +30,11 @@ export function ConfirmOrder() {
       sumTotalPriceItems += product[i].totalPriceItem
     }
 
-    console.log('chegou')
-
     setTotalPriceItems(sumTotalPriceItems)
   }, [product])
 
-  const isConfirmedDisabled = !product.length
+  const isConfirmedDisabled =
+    !product.length || !cep || existsEmptyFields === true
 
   return (
     <ConfirmOrderContainer>
@@ -93,7 +74,7 @@ export function ConfirmOrder() {
             </span>
           </Total>
         </TotalContainer>
-        <ConfirmOrderButton disabled={isConfirmedDisabled} type="submit">
+        <ConfirmOrderButton disabled={isConfirmedDisabled}>
           confirmar pedido
         </ConfirmOrderButton>
       </ConfirmOrderCard>
