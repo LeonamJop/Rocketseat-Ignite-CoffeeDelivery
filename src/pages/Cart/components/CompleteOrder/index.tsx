@@ -5,7 +5,7 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 import { api } from '../../../../services/api'
 import {
@@ -48,6 +48,7 @@ export function CompleteOrder() {
     federativeUnit,
     setFederativeUnit,
   } = useContext(ChoiceProductContext)
+  const [isCepInvalid, setIsCepInvalid] = useState(false)
 
   useEffect(() => {
     let address = {}
@@ -78,15 +79,24 @@ export function CompleteOrder() {
     if (inputCep && inputCep.length === 8) {
       const fetchData = async () => {
         const response = await api.get(`${inputCep}/json`)
-        setCep(response.data)
-        setInputCep(response.data.cep)
+        if (!response.data.erro) {
+          setCep(response.data)
+          setInputCep(response.data.cep)
+          setIsCepInvalid(false)
+        } else {
+          alert('Insira um cep válido')
+          setIsCepInvalid(true)
+          setCep('')
+          setDeliveryAddress({})
+        }
+        console.log(response)
       }
 
       fetchData()
     }
-  }, [inputCep, setCep, setInputCep])
+  }, [inputCep, setCep, setDeliveryAddress, setInputCep])
 
-  const isCepEmpty = !cep
+  const isCepEmpty = !cep || isCepInvalid
 
   return (
     <ComplementOrderContainer>
