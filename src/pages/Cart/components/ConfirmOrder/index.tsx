@@ -11,14 +11,19 @@ import {
 } from './styles'
 
 export function ConfirmOrder() {
-  const { handleFormatValue, product, existsEmptyFields, cep } =
-    useContext(ChoiceProductContext)
+  const {
+    handleFormatValue,
+    product,
+    existsEmptyFields,
+    cep,
+    paymentTypeSelected,
+  } = useContext(ChoiceProductContext)
   const [totalPriceItems, setTotalPriceItems] = useState(0)
 
-  const [newPrice, setNewPrice] = useState(product)
+  const [updateCartProductPrice, setUpdateCartProductPrice] = useState(product)
 
   useEffect(() => {
-    setNewPrice(product)
+    setUpdateCartProductPrice(product)
   }, [product])
 
   const freight = 3.5
@@ -34,24 +39,27 @@ export function ConfirmOrder() {
   }, [product])
 
   const isConfirmedDisabled =
-    !product.length || !cep || existsEmptyFields === true
+    !product.length ||
+    !cep ||
+    existsEmptyFields === true ||
+    !paymentTypeSelected.length
 
   return (
     <ConfirmOrderContainer>
       <h1>Cafés selecionados</h1>
       <ConfirmOrderCard>
-        {newPrice.length > 0 &&
-          newPrice.map((newPrice: any) => {
+        {updateCartProductPrice.length > 0 &&
+          updateCartProductPrice.map((updateCartProductPrice: any) => {
             return (
               <CoffeeSelected
-                key={newPrice.id}
-                id={newPrice.id}
-                image={newPrice.image}
-                name={newPrice.name}
-                price={newPrice.price}
-                quantity={newPrice.quantity}
-                setQuantity={newPrice.setQuantity}
-                totalPriceItem={newPrice.totalPriceItem}
+                key={updateCartProductPrice.id}
+                id={updateCartProductPrice.id}
+                image={updateCartProductPrice.image}
+                name={updateCartProductPrice.name}
+                price={updateCartProductPrice.price}
+                quantity={updateCartProductPrice.quantity}
+                setQuantity={updateCartProductPrice.setQuantity}
+                totalPriceItem={updateCartProductPrice.totalPriceItem}
               />
             )
           })}
