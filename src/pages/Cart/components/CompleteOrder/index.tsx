@@ -54,7 +54,6 @@ export function CompleteOrder() {
     setCity,
     federativeUnit,
     setFederativeUnit,
-    paymentTypeSelected,
     setPaymentTypeSelected,
   } = useContext(ChoiceProductContext)
   const [isCepInvalid, setIsCepInvalid] = useState(false)
@@ -106,12 +105,6 @@ export function CompleteOrder() {
       fetchData()
     }
   }, [inputCep, setCep, setDeliveryAddress, setInputCep])
-
-  // useEffect(() => {
-  //   if (paymentTypeSelected.length){
-
-  //   }
-  // },[])
 
   const isCepEmpty = !cep || isCepInvalid
 
