@@ -18,11 +18,14 @@ interface CepProps {
 interface ChoiceProductType {
   product: any
   setProduct: Dispatch<SetStateAction<any>>
+  deliveryAddress: any
+  setDeliveryAddress: Dispatch<SetStateAction<any>>
+  paymentTypeSelected: string
+  setPaymentTypeSelected: Dispatch<SetStateAction<string>>
+
   handleFormatValue: any
   cep: any
   setCep: Dispatch<SetStateAction<any>>
-  deliveryAddress: any
-  setDeliveryAddress: Dispatch<SetStateAction<any>>
   inputCep: string
   setInputCep: Dispatch<SetStateAction<string>>
   street: string
@@ -50,8 +53,10 @@ export function ChoiceProductContextPorvider({
   children,
 }: ChoiceProductContextPorviderProps) {
   const [product, setProduct] = useState([])
-  const [cep, setCep] = useState<CepProps>()
   const [deliveryAddress, setDeliveryAddress] = useState({})
+  const [paymentTypeSelected, setPaymentTypeSelected] = useState('')
+
+  const [cep, setCep] = useState<CepProps>()
   const [existsEmptyFields, setExistsEmptyFields] = useState(false)
 
   const [inputCep, setInputCep] = useState('')
@@ -63,9 +68,13 @@ export function ChoiceProductContextPorvider({
   const [federativeUnit, setFederativeUnit] = useState('')
 
   useEffect(() => {
-    localStorage.setItem('todoList', JSON.stringify(product))
+    localStorage.setItem('shoppingCart', JSON.stringify(product))
     localStorage.setItem('deliveryAddress', JSON.stringify(deliveryAddress))
-  }, [deliveryAddress, product])
+    localStorage.setItem(
+      'paymentTypeSelected',
+      JSON.stringify(paymentTypeSelected),
+    )
+  }, [deliveryAddress, paymentTypeSelected, product])
 
   function handleFormatValue(item: number) {
     return String(item.toFixed(2)).replace('.', ',')
@@ -107,6 +116,8 @@ export function ChoiceProductContextPorvider({
         federativeUnit,
         setFederativeUnit,
         existsEmptyFields,
+        paymentTypeSelected,
+        setPaymentTypeSelected,
       }}
     >
       {children}
