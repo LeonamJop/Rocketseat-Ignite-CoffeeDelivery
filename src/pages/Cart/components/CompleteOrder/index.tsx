@@ -5,7 +5,7 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
-import { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 import { api } from '../../../../services/api'
 import {
@@ -27,6 +27,13 @@ import {
   Street,
 } from './styles'
 
+export interface isActiveProps {
+  border: string
+  backgroundColor: string
+  children: React.ReactNode
+  onClick: React.MouseEventHandler<HTMLButtonElement>
+}
+
 export function CompleteOrder() {
   const {
     cep,
@@ -47,8 +54,13 @@ export function CompleteOrder() {
     setCity,
     federativeUnit,
     setFederativeUnit,
+    paymentTypeSelected,
+    setPaymentTypeSelected,
   } = useContext(ChoiceProductContext)
   const [isCepInvalid, setIsCepInvalid] = useState(false)
+  const [creditCardActive, setCreditCardActive] = useState(false)
+  const [debitCardActive, setDebitCardActive] = useState(false)
+  const [moneyActive, setMoneyActive] = useState(false)
 
   useEffect(() => {
     let address = {}
@@ -89,14 +101,40 @@ export function CompleteOrder() {
           setCep('')
           setDeliveryAddress({})
         }
-        console.log(response)
       }
 
       fetchData()
     }
   }, [inputCep, setCep, setDeliveryAddress, setInputCep])
 
+  // useEffect(() => {
+  //   if (paymentTypeSelected.length){
+
+  //   }
+  // },[])
+
   const isCepEmpty = !cep || isCepInvalid
+
+  function creditCardSelected() {
+    setCreditCardActive(true)
+    setDebitCardActive(false)
+    setMoneyActive(false)
+    setPaymentTypeSelected('credit')
+  }
+
+  function debitCardSelected() {
+    setCreditCardActive(false)
+    setDebitCardActive(true)
+    setMoneyActive(false)
+    setPaymentTypeSelected('debit')
+  }
+
+  function moneySelected() {
+    setCreditCardActive(false)
+    setDebitCardActive(false)
+    setMoneyActive(true)
+    setPaymentTypeSelected('money')
+  }
 
   return (
     <ComplementOrderContainer>
@@ -171,15 +209,27 @@ export function CompleteOrder() {
           </div>
         </FormHeader>
         <PaymentType>
-          <PaymentTypeButton>
+          <PaymentTypeButton
+            onClick={creditCardSelected}
+            backgroundColor={creditCardActive ? '#EBE5F9' : '#E6E5E5'}
+            border={creditCardActive ? '1px solid #8047F8' : 'none'}
+          >
             <CreditCard size={16} />
             <span>Cartão de crédito</span>
           </PaymentTypeButton>
-          <PaymentTypeButton>
+          <PaymentTypeButton
+            onClick={debitCardSelected}
+            backgroundColor={debitCardActive ? '#EBE5F9' : '#E6E5E5'}
+            border={debitCardActive ? '1px solid #8047F8' : 'none'}
+          >
             <Bank size={16} />
             <span>cartão de débito</span>
           </PaymentTypeButton>
-          <PaymentTypeButton>
+          <PaymentTypeButton
+            onClick={moneySelected}
+            backgroundColor={moneyActive ? '#EBE5F9' : '#E6E5E5'}
+            border={moneyActive ? '1px solid #8047F8' : 'none'}
+          >
             <Money size={16} />
             <span>dinheiro</span>
           </PaymentTypeButton>

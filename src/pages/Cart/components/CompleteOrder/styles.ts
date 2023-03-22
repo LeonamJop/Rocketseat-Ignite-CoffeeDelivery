@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { isActiveProps } from '.'
 
 export const ComplementOrderContainer = styled.div`
   width: 40rem;
@@ -149,7 +150,7 @@ export const PaymentType = styled.div`
   gap: 0.75rem;
 `
 
-export const PaymentTypeButton = styled.button`
+export const PaymentTypeButton = styled.button<isActiveProps>`
   width: 11.163rem;
   height: 3.188rem;
 
@@ -160,10 +161,11 @@ export const PaymentTypeButton = styled.button`
 
   padding: 1rem;
 
-  border: none;
+  border: ${(props) => props.border};
+
   border-radius: 6px;
 
-  background: ${(props) => props.theme['base-button']};
+  background: ${(props) => props.backgroundColor};
 
   svg {
     color: ${(props) => props.theme['purple-base']};
@@ -179,8 +181,8 @@ export const PaymentTypeButton = styled.button`
     background: ${(props) => props.theme['base-hover']};
   }
 
-  &:focus {
+  /* &.active {
     background: ${(props) => props.theme['purple-ligth']};
     border: 1px solid ${(props) => props.theme['purple-base']};
-  }
+  } */
 `
