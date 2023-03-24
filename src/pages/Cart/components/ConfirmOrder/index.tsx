@@ -42,7 +42,7 @@ export function ConfirmOrder() {
     !product.length ||
     !cep ||
     existsEmptyFields === true ||
-    !paymentTypeSelected.length
+    !paymentTypeSelected
 
   return (
     <ConfirmOrderContainer>
