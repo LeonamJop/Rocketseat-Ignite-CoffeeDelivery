@@ -89,7 +89,11 @@ export function CompleteOrder() {
   ])
 
   useEffect(() => {
-    if (inputCep && inputCep.length === 8) {
+    if (!inputCep.length) {
+      setIsCepInvalid(true)
+      setCep('')
+      setDeliveryAddress({})
+    } else if (inputCep.length && inputCep.length === 8) {
       const fetchData = async () => {
         const response = await api.get(`${inputCep}/json`)
         if (!response.data.erro) {
@@ -103,6 +107,8 @@ export function CompleteOrder() {
           setDeliveryAddress({})
         }
       }
+
+      console.log(inputCep)
 
       fetchData()
     }
