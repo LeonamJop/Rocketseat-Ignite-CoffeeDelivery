@@ -6,6 +6,7 @@ import {
   Money,
 } from 'phosphor-react'
 import React, { useContext, useEffect, useState } from 'react'
+import { PaymentTypeEnum } from '../../../../Enums/paymentTypesEnums'
 import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 import { api } from '../../../../services/api'
 import {
@@ -54,6 +55,7 @@ export function CompleteOrder() {
     setCity,
     federativeUnit,
     setFederativeUnit,
+    paymentTypeSelected,
     setPaymentTypeSelected,
   } = useContext(ChoiceProductContext)
   const [isCepInvalid, setIsCepInvalid] = useState(false)
@@ -108,25 +110,46 @@ export function CompleteOrder() {
 
   const isCepEmpty = !cep || isCepInvalid
 
+  useEffect(() => {
+    if (paymentTypeSelected !== 0) {
+      switch (paymentTypeSelected) {
+        case PaymentTypeEnum.CREDIT_PAYMENT:
+          setCreditCardActive(true)
+          break
+
+        case PaymentTypeEnum.DEBIT_PAYMENT:
+          setDebitCardActive(true)
+          break
+
+        case PaymentTypeEnum.MONEY_PAYMENT:
+          setMoneyActive(true)
+          break
+
+        default:
+          break
+      }
+    }
+  }, [paymentTypeSelected])
+
   function creditCardSelected() {
     setCreditCardActive(true)
     setDebitCardActive(false)
     setMoneyActive(false)
-    setPaymentTypeSelected('credit')
+    setPaymentTypeSelected(PaymentTypeEnum.CREDIT_PAYMENT)
   }
 
   function debitCardSelected() {
     setCreditCardActive(false)
     setDebitCardActive(true)
     setMoneyActive(false)
-    setPaymentTypeSelected('debit')
+    setPaymentTypeSelected(PaymentTypeEnum.DEBIT_PAYMENT)
   }
 
   function moneySelected() {
     setCreditCardActive(false)
     setDebitCardActive(false)
     setMoneyActive(true)
-    setPaymentTypeSelected('money')
+    setPaymentTypeSelected(PaymentTypeEnum.MONEY_PAYMENT)
   }
 
   return (
