@@ -1,6 +1,6 @@
 import { Items } from '../../../../components/Items'
 import { BannerContainer, Title } from './styles'
-import imgBanner from '../../../../assets/CoffeeImage.svg'
+import imgBanner from '../../../../assets/CoffeeList/CoffeeImage.svg'
 
 export function Banner() {
   return (
