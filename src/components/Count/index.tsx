@@ -39,7 +39,7 @@ export function Count({ id, price, quantity, setQuantity }: CountProps) {
 
   useEffect(() => {
     if (quantity) {
-      if (state < 1) return setQuantity?.(1)
+      if (state < 1) return
 
       const updateProduct = product.find((item: CountProps) => item.id === id)
 
