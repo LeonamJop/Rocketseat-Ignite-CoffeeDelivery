@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 import { CoffeeSelected } from '../CoffeeSelected'
 import {
@@ -82,9 +83,11 @@ export function ConfirmOrder() {
             </span>
           </Total>
         </TotalContainer>
-        <ConfirmOrderButton disabled={isConfirmedDisabled}>
-          confirmar pedido
-        </ConfirmOrderButton>
+        <NavLink to="/orderConfirmed">
+          <ConfirmOrderButton disabled={isConfirmedDisabled}>
+            confirmar pedido
+          </ConfirmOrderButton>
+        </NavLink>
       </ConfirmOrderCard>
     </ConfirmOrderContainer>
   )
