@@ -15,8 +15,6 @@ import cubano from '../../../../assets/CoffeeList/Cubano.svg'
 import havaiano from '../../../../assets/CoffeeList/Havaiano.svg'
 import arabe from '../../../../assets/CoffeeList/Arabe.svg'
 import irlandes from '../../../../assets/CoffeeList/Irlandes.svg'
-// import { useContext } from 'react'
-// import { ChoiceProductContext } from '../../../../context/ChoiceProductContext'
 
 const cards = [
   {
