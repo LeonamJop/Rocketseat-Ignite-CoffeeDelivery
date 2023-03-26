@@ -70,7 +70,10 @@ export const DeliveryDetails = styled.div`
 export const OrderInfo = styled.div`
   height: 2.625rem;
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: row;
+  gap: 12px;
 `
 export const Icon = styled.i`
   width: 2rem;
@@ -86,4 +89,12 @@ export const Icon = styled.i`
 
   color: ${(props) => props.theme['white-base']};
 `
-export const DescriptionOrderInfo = styled.div``
+export const DescriptionOrderInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+`
