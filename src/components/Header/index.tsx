@@ -19,7 +19,7 @@ export function Header() {
         <div>
           {cep ? (
             <UserLocation>
-              <MapPin size={22} />
+              <MapPin weight="fill" size={22} />
               <span>
                 {cep.localidade}, {cep.uf}
               </span>
@@ -30,7 +30,7 @@ export function Header() {
 
           <NavLink to="/cart" title="Carrinho de compra">
             <Cart>
-              <ShoppingCart size={22} />
+              <ShoppingCart weight="fill" size={22} />
               {product.length ? <Counter /> : ''}
             </Cart>
           </NavLink>

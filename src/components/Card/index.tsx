@@ -75,7 +75,7 @@ export function Card({ id, image, tags, name, description, price }: CardProps) {
         <ActionsContainer>
           <Count quantity={quantity} setQuantity={setQuantity} />
           <AddToCard onClick={handleAddToBuyList}>
-            <ShoppingCart size={22} />
+            <ShoppingCart weight="fill" size={22} />
           </AddToCard>
         </ActionsContainer>
       </BuyContainer>
