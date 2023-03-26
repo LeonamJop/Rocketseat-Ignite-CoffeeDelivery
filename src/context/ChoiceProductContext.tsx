@@ -20,8 +20,8 @@ interface ChoiceProductType {
   setProduct: Dispatch<SetStateAction<any>>
   deliveryAddress: any
   setDeliveryAddress: Dispatch<SetStateAction<any>>
-  paymentTypeSelected: number
-  setPaymentTypeSelected: Dispatch<SetStateAction<number>>
+  paymentTypeSelected: string
+  setPaymentTypeSelected: Dispatch<SetStateAction<string>>
 
   handleFormatValue: any
   cep: any
@@ -54,7 +54,7 @@ export function ChoiceProductContextPorvider({
 }: ChoiceProductContextPorviderProps) {
   const [product, setProduct] = useState([])
   const [deliveryAddress, setDeliveryAddress] = useState({})
-  const [paymentTypeSelected, setPaymentTypeSelected] = useState(Number)
+  const [paymentTypeSelected, setPaymentTypeSelected] = useState('')
 
   const [cep, setCep] = useState<CepProps>()
   const [existsEmptyFields, setExistsEmptyFields] = useState(false)
